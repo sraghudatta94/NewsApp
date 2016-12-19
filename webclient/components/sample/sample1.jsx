@@ -1,47 +1,54 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-
+import AutoComplete from 'material-ui/AutoComplete';
+var axios = require('axios');
+	const colors = ['Red','Orange','Yellow','Green','Blue','Purple','Black','White'];
 export  class Sample1 extends React.Component {
 	constructor () {
 		super();
 		this.state = {
 			name:'Guest name',
-			age: '',
-			gender: '',
-			company: ''
+			something : [],
 		}
+			//this.Something=[];
+
+		
 	}
 
 	handleNameState (event) {
 		this.setState({ name: event.target.value });
 	}
+	componentDidMount(){
 
-	handleAgeState (event) {
-		this.setState({ age: event.target.value });
+axios.get('https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=998ff651e55e4c518d2948f9407db7c2')
+.then((response) => {
+	if(response.data !== undefined){
+	var arr = (response.data.articles).map(function(n){
+		//console.log(n.);
+		return n.author;
+	});
+
+	this.setState({something: arr});
+	
+}
+//console.log(data.data.articles[5].author);
+ });
 	}
-
-	handleGenderState (event) {
-		this.setState({ gender: event.target.value });
-	}
-
-	handleCompanyState (event) {
-		this.setState({ company: event.target.value });
-	}
-
 	render () {
+		//var testing =axios.get('https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=998ff651e55e4c518d2948f9407db7c2');
+//console.log(testing);
+
+	  	
+
+  //console.log(me);
 		return (
 			<div>
-				<h1>Hello {this.props.message}</h1>
-				<TextField floatingLabelText="Name" onChange={this.handleNameState.bind(this)} value={this.state.name}/>
-				<br/>
-				<TextField floatingLabelText="Age" onChange={this.handleAgeState.bind(this)} value={this.state.age}/>
-				<br/>
-				<TextField floatingLabelText="Gender" onChange={this.handleGenderState.bind(this)} value={this.state.gender}/>
-				<br/>
-				<TextField floatingLabelText="Company" onChange={this.handleCompanyState.bind(this)} value={this.state.company}/>
-				<br/>
-				<RaisedButton label="Primary" primary={true} />
+THIS IS MY FIRST COMPONENT
+<br/>
+			<br/>
+				<AutoComplete floatingLabelText="Enter Broadcast Name" filter={AutoComplete.caseInsensitiveFilter} dataSource={this.state.something} />
+    
 			</div>
 		);
 	}

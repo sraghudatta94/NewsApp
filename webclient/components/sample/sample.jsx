@@ -1,48 +1,87 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import AutoComplete from 'material-ui/AutoComplete';
+import ShowArticles from './showArticles.jsx';
 
+var axios = require('axios');
 export  class Sample extends React.Component {
 	constructor () {
 		super();
 		this.state = {
-			name:'Guest name',
-			age: '',
-			gender: '',
-			company: ''
+			something : [],
+			articleId :[],
+			myArticles :[],
 		}
+			//this.Something=[];
+
+		
 	}
 
 	handleNameState (event) {
 		this.setState({ name: event.target.value });
 	}
+	componentDidMount(){
 
-	handleAgeState (event) {
-		this.setState({ age: event.target.value });
+axios.get('https://newsapi.org/v1/sources?language=en')
+.then((response) => {
+	if(response.data !== undefined){
+				//console.log(response.data);
+
+	var arr = (response.data.sources).map(function(n){
+		return n.name;
+	});
+	var arr2=(response.data.sources).map(function(n){
+		return n.id;
+	});
+
+	this.setState({something: arr,articleId: arr2});
+
+	
+}
+//console.log(data.data.articles[5].author);
+ });
 	}
+	 getArticles=(render,index)=>{
+		axios.get('https://newsapi.org/v1/articles?source='+this.state.articleId[index]+'&apiKey=998ff651e55e4c518d2948f9407db7c2')
 
-	handleGenderState (event) {
-		this.setState({ gender: event.target.value });
-	}
+.then((response) => {
+	//console.log(response.data);
+	 var arr3 = (response.data.articles).map(function(n){
+	 	//console.log(response.data.articles);
+	 	return n;
+	});
+this.setState({myArticles: arr3});
+	//console.log(myArticles);
+		//this.setState({response: data});
+			
+	
 
-	handleCompanyState (event) {
-		this.setState({ company: event.target.value });
+//console.log(data.data.articles[5].author);
+ });
+
 	}
 
 	render () {
+		//var testing =axios.get('https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=998ff651e55e4c518d2948f9407db7c2');
+//console.log(testing);
+
+	  	
+
+  //console.log(me);
 		return (
 			<div>
-				<h1>Hai {this.props.message}</h1>
-				<TextField floatingLabelText="Name" onChange={this.handleNameState.bind(this)} value={this.state.name}/>
-				<br/>
-				<TextField floatingLabelText="Age" onChange={this.handleAgeState.bind(this)} value={this.state.age}/>
-				<br/>
-				<TextField floatingLabelText="Gender" onChange={this.handleGenderState.bind(this)} value={this.state.gender}/>
-				<br/>
-				<TextField floatingLabelText="Company" onChange={this.handleCompanyState.bind(this)} value={this.state.company}/>
-				<br/>
-				<RaisedButton label="Primary" primary={true} />
-			</div>
+<br/>
+			<br/>
+				<AutoComplete 
+				floatingLabelText="Enter Broadcast Name" 
+				filter={AutoComplete.caseInsensitiveFilter} 
+				dataSource={this.state.something} 
+				onNewRequest={this.getArticles}/>
+				<ShowArticles data={this.state.myArticles} />
+    		</div>
+
+
 		);
 	}
 }//end of class

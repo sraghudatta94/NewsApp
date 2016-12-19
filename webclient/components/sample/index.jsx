@@ -1,5 +1,6 @@
 import Sample from './sample.jsx';
 import Sample1 from './sample1.jsx';
+import MaterialUIAutocomplete from './MaterialUIAutocomplete.jsx';
 
 
 //Export the component, so that by including the Folder, by default the component is exported
@@ -9,6 +10,7 @@ import Sample1 from './sample1.jsx';
 //ES6 export
 export Sample;
 export Sample1;
+export MaterialUIAutocomplete;
 
 //If your functional module have multiple components and more than one of them have 
 // to be exported, follow the object notation to export them
