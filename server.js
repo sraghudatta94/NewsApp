@@ -9,6 +9,9 @@ var config = require('./webpack.config');
 var index = require('./webserver/routes/index');
 var users = require('./webserver/routes/users');
 var saveNews = require('./webserver/routes/saveNews');
+var viewNews = require('./webserver/routes/viewSavedNews');
+var updateNews = require('./webserver/routes/updateNews');
+
 
 var app = express();
 var compiler = webpack(config);
@@ -31,9 +34,13 @@ db.once('open', function() {
 console.log("From server ");
 
 //Ruotes
+
 app.use('/data', index);
 app.use('/stream',users);
 app.use('/save',saveNews);
+app.use('/view',viewNews);
+app.use('/update',updateNews);
+
 
 
 app.use(webpackDevMiddleware(compiler, {

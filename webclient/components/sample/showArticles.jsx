@@ -13,23 +13,25 @@ constructor () {
   }
   displayArticles(){
  var cardCSS={
+width: '50%',
+margin : '0 auto',
 
-  height:"50%",
-  width:"50%"
-
+ }
+ var imageCSS={
+  height:'25%',
  }
 console.log("inside display displayArticles");
     var singleCard=(this.props.data).map(function(n){
-      console.log(n.title);
+      //console.log(n.title);
 return(<div style={cardCSS}><Card>
      <CardMedia
       overlay={<CardTitle title={n.title} subtitle={n.author} />}
     >
-      <img src={n.urlToImage} />
+      <img src={n.urlToImage} style={imageCSS}/>
     </CardMedia>
     <CardText>
-    {n.description}
-    <br/><a href={n.url}>Click to see in homepage</a>
+    <strong>{n.description}</strong>
+    <br/><br/><br/><a href={n.url}>Click to see in homepage</a>
     </CardText>
     <CardActions>
  <SaveModal data={n} username="admin@admin.com" />
@@ -39,8 +41,8 @@ return(<div style={cardCSS}><Card>
     return singleCard;
   }
   render(){
-    console.log("..............");
-    console.log(this.props.data);
+    //console.log("..............");
+    //console.log(this.props.data);
     return(<div>
 
       

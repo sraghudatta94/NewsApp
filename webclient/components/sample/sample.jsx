@@ -78,6 +78,7 @@ this.setState({myArticles: arr3});
 				filter={AutoComplete.caseInsensitiveFilter} 
 				dataSource={this.state.something} 
 				onNewRequest={this.getArticles}/>
+				<a href="/#/saveddata">View saved Data</a>
 				<ShowArticles data={this.state.myArticles} />
     		</div>
 
