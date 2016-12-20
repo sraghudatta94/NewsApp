@@ -3,7 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-
+import Axios from 'axios';
 
 /**
  * Dialog with action buttons. The actions are passed in as an array of React objects,
@@ -24,7 +24,20 @@ export default class SaveModal extends React.Component {
     this.setState({open: false});
   };
 
-  render() {
+  saveNews=()=>{
+    //
+    Axios.post('/save',{news:this.props.data,username:this.props.username,comments:this.refs.comments.getValue()})
+    .then(function(response){
+      console.log(response);
+    })
+    .catch(function (error) {
+    console.log(error);
+
+  });
+    this.handleClose();
+  }
+
+  render(){
     const actions = [
       <FlatButton
         label="Cancel"
@@ -34,7 +47,7 @@ export default class SaveModal extends React.Component {
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        onTouchTap={this.handleClose} />,
+        onTouchTap={this.saveNews} />,
     ];
 
     return (
@@ -48,6 +61,7 @@ export default class SaveModal extends React.Component {
           onRequestClose={this.handleClose}
         >
 <TextField
+      ref="comments"
       hintText="Give your comments here.." />
         </Dialog>
       </div>

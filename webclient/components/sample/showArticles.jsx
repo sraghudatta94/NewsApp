@@ -32,7 +32,7 @@ return(<div style={cardCSS}><Card>
     <br/><a href={n.url}>Click to see in homepage</a>
     </CardText>
     <CardActions>
- <SaveModal data={n} />
+ <SaveModal data={n} username="admin@admin.com" />
      </CardActions>
   </Card><br/></div>);
     });

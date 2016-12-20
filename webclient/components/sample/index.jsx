@@ -1,5 +1,4 @@
 import Sample from './sample.jsx';
-import Sample1 from './sample1.jsx';
 import MaterialUIAutocomplete from './MaterialUIAutocomplete.jsx';
 
 
@@ -9,7 +8,6 @@ import MaterialUIAutocomplete from './MaterialUIAutocomplete.jsx';
 
 //ES6 export
 export Sample;
-export Sample1;
 export MaterialUIAutocomplete;
 
 //If your functional module have multiple components and more than one of them have 

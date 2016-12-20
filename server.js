@@ -1,31 +1,62 @@
 var path = require('path');
 var webpack = require('webpack');
-var webpackDevServer = require('webpack-dev-server');
+var express = require('express');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
+var config = require('./webpack.config');
+var index = require('./webserver/routes/index');
+var users = require('./webserver/routes/users');
+var saveNews = require('./webserver/routes/saveNews');
 
-var wpackConfig = require("./webpack.config");
+var app = express();
+var compiler = webpack(config);
 
-//Use 0.0.0.0, so that this can bind to any network interfaces (IP Address)
-wpackConfig.entry.app.unshift(
-  "webpack-dev-server/client?http://0.0.0.0:8080/",
-  "webpack/hot/dev-server");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use('/', express.static(path.join(__dirname, './webclient/')));
 
-wpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 
-var wpackCompiler = webpack(wpackConfig);
+//Mongoose
+var db = 'mongodb://localhost/test';
+mongoose.connect(db);
 
-var wpackServer = new webpackDevServer(wpackCompiler, {
-  contentBase: path.join(__dirname, 'webclient'),
-  publicPath: wpackConfig.output.publicPath,
-  hot: true,
-  watchOptions: {
-  aggregateTimeout: 300,
-  poll: 1000 // is this the same as specifying --watch-poll?
-}
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log("connnected with mongo");
 });
-wpackServer.listen(8080, '0.0.0.0', function(err, result) {
-  if (err) {
-    console.error("Error ", err);
-  }
 
-  console.log("Server started at 8080");
+console.log("From server ");
+
+//Ruotes
+app.use('/data', index);
+app.use('/stream',users);
+app.use('/save',saveNews);
+
+
+app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath,
+    stats: {
+        colors: true
+    },
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
+}));
+
+app.use(webpackHotMiddleware(compiler));
+
+
+
+//Listening to port 8081
+app.listen(8080, '0.0.0.0', function(err, result) {
+    if (err) {
+        console.error("Error ", err);
+    }
+
+    console.log("Server started at 8080");
 });
