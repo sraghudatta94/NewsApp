@@ -2,7 +2,6 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import Axios from 'axios';
 
 /**
@@ -11,7 +10,7 @@ import Axios from 'axios';
  *
  * You can also close this dialog by clicking outside the dialog, or with the 'Esc' key.
  */
-export default class SaveModal extends React.Component {
+export default class DeleteModal extends React.Component {
   state = {
     open: false,
   };
@@ -23,11 +22,11 @@ export default class SaveModal extends React.Component {
   handleClose = () => {
     this.setState({open: false});
   };
-
-  saveNews=()=>{
-    //
-    Axios.post('/delete',{news:this.props.data,username:this.props.username,comments:this.refs.comments.getValue()})
+  deleteNews=()=>{
+    console.log(this.props.username);
+        Axios.delete('/delete/'+this.props.id)
     .then(function(response){
+      //this.setState({comments:this.props.comments});
       console.log(response);
     })
     .catch(function (error) {
@@ -35,34 +34,38 @@ export default class SaveModal extends React.Component {
 
   });
     this.handleClose();
+    this.props.updateView();
   }
-
+    handleTouchTap = () => {
+    this.setState({
+      open: true,
+    });
+  };
   render(){
+
     const actions = [
       <FlatButton
-        label="Cancel"
+        label="No"
         primary={true}
         onTouchTap={this.handleClose} />,
       <FlatButton
-        label="Submit"
+        label="Yes"
         primary={true}
         keyboardFocused={true}
-        onTouchTap={this.saveNews} />,
+        onTouchTap={this.deleteNews} />,
     ];
 
     return (
       <div>
-        <RaisedButton label="Delete" onTouchTap={this.handleOpen} />
+        <RaisedButton label="Delete" fullWidth={true} secondary={true} onTouchTap={this.handleOpen} />
         <Dialog
-          title={this.props.data.title}
+          title={this.props.data.comments}
           actions={actions}
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
-<TextField
-      ref="comments"
-      hintText="Give your comments here.." />
+          Are you sure you want to delete this comment?
         </Dialog>
       </div>
     );

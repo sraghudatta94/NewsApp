@@ -11,7 +11,7 @@ import Axios from 'axios';
  *
  * You can also close this dialog by clicking outside the dialog, or with the 'Esc' key.
  */
-export default class SaveModal extends React.Component {
+export default class UpdateModal extends React.Component {
   state = {
     open: false,
   };
@@ -24,10 +24,12 @@ export default class SaveModal extends React.Component {
     this.setState({open: false});
   };
 
-  saveNews=()=>{
-    //
-    Axios.put('/update',{news:this.props.data,username:this.props.username,update:this.refs.update.getValue()})
+  updateNews=()=>{
+    console.log(this.props.username);
+    console.log(this.refs.update.getValue());
+        Axios.put('/update?username='+this.props.username,{news:this.props.data,username:this.props.username,newsId:this.props.id,comments:this.refs.update.getValue()})
     .then(function(response){
+      //this.setState({comments:this.props.comments});
       console.log(response);
     })
     .catch(function (error) {
@@ -35,6 +37,7 @@ export default class SaveModal extends React.Component {
 
   });
     this.handleClose();
+    this.props.updateView();
   }
 
   render(){
@@ -47,12 +50,12 @@ export default class SaveModal extends React.Component {
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        onTouchTap={this.saveNews} />,
+        onTouchTap={this.updateNews} />,
     ];
 
     return (
       <div>
-        <RaisedButton label="Update" onTouchTap={this.handleOpen} />
+        <RaisedButton label="Update" fullWidth={true} primary={true} onTouchTap={this.handleOpen} />
         <Dialog
           title={this.props.data.comments}
           actions={actions}

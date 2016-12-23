@@ -3,8 +3,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import AutoComplete from 'material-ui/AutoComplete';
 import ShowArticles from './showArticles.jsx';
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 
 var axios = require('axios');
+
 export  class Sample extends React.Component {
 	constructor () {
 		super();
@@ -12,11 +16,14 @@ export  class Sample extends React.Component {
 			something : [],
 			articleId :[],
 			myArticles :[],
+
 		}
-			//this.Something=[];
+
 
 		
 	}
+
+
 
 	handleNameState (event) {
 		this.setState({ name: event.target.value });
@@ -39,50 +46,43 @@ axios.get('https://newsapi.org/v1/sources?language=en')
 
 	
 }
-//console.log(data.data.articles[5].author);
  });
 	}
 	 getArticles=(render,index)=>{
 		axios.get('https://newsapi.org/v1/articles?source='+this.state.articleId[index]+'&apiKey=998ff651e55e4c518d2948f9407db7c2')
 
 .then((response) => {
-	//console.log(response.data);
 	 var arr3 = (response.data.articles).map(function(n){
-	 	//console.log(response.data.articles);
 	 	return n;
 	});
 this.setState({myArticles: arr3});
-	//console.log(myArticles);
-		//this.setState({response: data});
-			
-	
 
-//console.log(data.data.articles[5].author);
  });
 
 	}
 
 	render () {
-		//var testing =axios.get('https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey=998ff651e55e4c518d2948f9407db7c2');
-//console.log(testing);
 
-	  	
+  const autoCompleteStyle={
+marginLeft :70,
+centre:true,
 
-  //console.log(me);
+};
+
+
 		return (
+			
 			<div>
-<br/>
-			<br/>
-				<AutoComplete 
+				<AutoComplete style={autoCompleteStyle}
 				floatingLabelText="Enter Broadcast Name" 
 				filter={AutoComplete.caseInsensitiveFilter} 
 				dataSource={this.state.something} 
 				onNewRequest={this.getArticles}/>
-				<a href="/#/saveddata">View saved Data</a>
-				<ShowArticles data={this.state.myArticles} />
+				{this.props.userLoggedIn ? <a href="/#/saveddata">View saved Data</a> : null }
+				<ShowArticles data={this.state.myArticles} userLoggedIn={this.props.userLoggedIn}/>
     		</div>
 
 
 		);
 	}
-}//end of class
+}//end of className

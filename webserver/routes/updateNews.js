@@ -3,19 +3,25 @@ var mongoose=require('mongoose')
 var News=require('../modal/newsSchema');
 var router =express.Router();
 router.put('/',function(req,res){
-    var username=req.body.username;
-    var newsArticle=req.body.news;
-    var comments=req.body.comments;
-    console.log(newsArticle);
-    console.log(newsArticle);
-    var news=new News({username:username,newsArticle:newsArticle,comments:comments});
-  news.update((error)=>{
+  console.log("put");
+  var newsId=req.body.newsId;
+  var comments=req.body.comments;
+  News.findById({_id:newsId},function(error,data){
     if(error){
-      res.json({'updated':false,error:error});
+    res.json({"updated":false,"error":error});
     }
     else{
-      res.json({'updated':true});
+      data.comments=comments;
+      data.save(function(err){
+        if(err){
+          console.log("Error in save update");
+          res.json({"updated":false,"error":error})
+        }
+        else{
+          res.json({"updated":true})
+        }
+      })
     }
   })
-});
+})
 module.exports=router;
