@@ -26,7 +26,6 @@ export default class DeleteModal extends React.Component {
     console.log(this.props.username);
         Axios.delete('/delete/'+this.props.id)
     .then(function(response){
-      //this.setState({comments:this.props.comments});
       console.log(response);
     })
     .catch(function (error) {
@@ -57,7 +56,7 @@ export default class DeleteModal extends React.Component {
 
     return (
       <div>
-        <RaisedButton label="Delete" fullWidth={true} secondary={true} onTouchTap={this.handleOpen} />
+        <RaisedButton label="Remove News" fullWidth={true} secondary={true} onTouchTap={this.handleOpen} />
         <Dialog
           title={this.props.data.comments}
           actions={actions}

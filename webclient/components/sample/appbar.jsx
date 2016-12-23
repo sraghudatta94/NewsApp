@@ -11,8 +11,8 @@ import axios from 'axios';
 
 export class AppBarNewsApp extends React.Component {
 
-    constructor () {
-    super();
+    constructor (props) {
+    super(props);
     this.state = {
       open: false,
       dataSource: [],
@@ -22,6 +22,11 @@ export class AppBarNewsApp extends React.Component {
       loginErrorMessage: false
     }
 }
+  
+  componentDidMount() {
+    this.props.isLoggedIn(this.state.loggedIn);
+  }
+
   handleOpen = () => {
     if(this.state.loggedIn)
         this.setState({loggedIn : false},() => {this.props.isLoggedIn(false);});
@@ -114,6 +119,7 @@ return (
         <AutoComplete style={autoCompleteStyle}
         dataSource={this.state.dataSource}
         floatingLabelText="Password" 
+        type="password"
         onUpdateInput={(searchText)=> {
           this.setState({password: searchText})
         }} />

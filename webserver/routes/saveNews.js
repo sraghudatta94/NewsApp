@@ -2,7 +2,7 @@ var express=require('express')
 var mongoose=require('mongoose')
 var News=require('../modal/newsSchema');
 var router =express.Router();
-router.post('/',function(req,res){
+router.post('/',function(req,res){//Saving news 
     var username=req.body.username;
     var newsArticle=req.body.news;
     var comments=req.body.comments;

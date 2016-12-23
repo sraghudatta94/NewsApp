@@ -25,15 +25,15 @@ export default class UpdateModal extends React.Component {
   };
 
   updateNews=()=>{
-    console.log(this.props.username);
-    console.log(this.refs.update.getValue());
+    //console.log(this.props.username);
+    //console.log(this.refs.update.getValue());
         Axios.put('/update?username='+this.props.username,{news:this.props.data,username:this.props.username,newsId:this.props.id,comments:this.refs.update.getValue()})
     .then(function(response){
       //this.setState({comments:this.props.comments});
-      console.log(response);
+      //console.log(response);
     })
     .catch(function (error) {
-    console.log(error);
+    //console.log(error);
 
   });
     this.handleClose();
@@ -55,7 +55,7 @@ export default class UpdateModal extends React.Component {
 
     return (
       <div>
-        <RaisedButton label="Update" fullWidth={true} primary={true} onTouchTap={this.handleOpen} />
+        <RaisedButton label="Update Comment" fullWidth={true} primary={true} onTouchTap={this.handleOpen} />
         <Dialog
           title={this.props.data.comments}
           actions={actions}

@@ -16,14 +16,8 @@ export  class Sample extends React.Component {
 			something : [],
 			articleId :[],
 			myArticles :[],
-
 		}
-
-
-		
 	}
-
-
 
 	handleNameState (event) {
 		this.setState({ name: event.target.value });
@@ -78,7 +72,7 @@ centre:true,
 				filter={AutoComplete.caseInsensitiveFilter} 
 				dataSource={this.state.something} 
 				onNewRequest={this.getArticles}/>
-				{this.props.userLoggedIn ? <a href="/#/saveddata">View saved Data</a> : null }
+				{this.props.userLoggedIn ? <a href="/#/saveddata"><FlatButton label="View Saved Data" /></a> : null }
 				<ShowArticles data={this.state.myArticles} userLoggedIn={this.props.userLoggedIn}/>
     		</div>
 

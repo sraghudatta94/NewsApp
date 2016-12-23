@@ -19,7 +19,7 @@ export default class SavedData extends React.Component {
 	render () {
 		return (
 			<div>
-				<AppBarNewsApp 	/>
+				<AppBarNewsApp isLoggedIn={this.checkLogin}/>
 				<ViewSavedArticles userLoggedIn={this.state.isLoggedIn}/>
 			</div>
 		)

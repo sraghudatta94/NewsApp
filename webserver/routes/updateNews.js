@@ -2,8 +2,7 @@ var express=require('express')
 var mongoose=require('mongoose')
 var News=require('../modal/newsSchema');
 var router =express.Router();
-router.put('/',function(req,res){
-  console.log("put");
+router.put('/',function(req,res){// updating the comments
   var newsId=req.body.newsId;
   var comments=req.body.comments;
   News.findById({_id:newsId},function(error,data){

@@ -34,7 +34,7 @@
   //console.log("inside ShowSavedArticles");
   //console.log(this.props.data);
       var singleCard=(this.props.data).map((news,index)=>{
-        console.log("Comment is "+news.comments);
+        //console.log("Comment is "+news.comments);
   return(<Card className="col-lg-6 col-md-6 col-sm-6">
       <CardHeader
         title={news.newsArticle.title}
@@ -48,10 +48,10 @@
       </CardActions>
       
       <CardText expandable={true}>
-      <img src={news.newsArticle.urlToImage} style={imageCSS}/>
+      <img src={news.newsArticle.urlToImage} style={imageCSS}/><br/><br/>
         <strong>{news.newsArticle.description}</strong><br/>
       <h2><i style={{color:"green"}}>{news.comments}</i></h2>
-      <br/><br/><br/><a href={news.newsArticle.url}>Click to see in homepage</a>
+      <br/><br/><a href={news.newsArticle.url}>Click to see in homepage</a>
           <UpdateModal id={news._id} data={news} updateView={this.props.onDataChange} username="admin@admin.com" />
   <DeleteModal id={news._id} data={news} updateView={this.props.onDataChange} username="admin@admin.com" />
         </CardText>

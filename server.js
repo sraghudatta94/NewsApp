@@ -15,7 +15,6 @@ var viewNews = require('./webserver/routes/viewSavedNews');
 var updateNews = require('./webserver/routes/updateNews');
 var deleteNews = require('./webserver/routes/deleteNews');
 var User = require('./webserver/modal/userSchema');
-//app.use(require('express-session')({ secret: 'vishal', resave: true, saveUninitialized: true }));
 var app = express();
 app.use(passport.initialize());
 app.use(passport.session());
@@ -53,7 +52,7 @@ app.use('/delete',deleteNews);
 app.post('/login',passport.authenticate('local'),function(req, res, next) {
   res.send('succefully loggedIn');
 });
-
+//Using Passport for Authprization
 passport.use(new LocalStrategy(
   function(username,password,done){
     User.findOne({username:username},function(err,user){
@@ -73,7 +72,9 @@ passport.use(new LocalStrategy(
   }
 ));
 passport.serializeUser(function(user, done) {
+  console.log("My user id"+user.id);
   done(null, user.id);
+
 });
 passport.deserializeUser(function(id, done) {
   User.findById(id, function(err, user) {
@@ -97,7 +98,7 @@ app.use(webpackHotMiddleware(compiler));
 
 
 
-//Listening to port 8081
+//Listening to port 8080
 app.listen(8080, '0.0.0.0', function(err, result) {
     if (err) {
         console.error("Error ", err);

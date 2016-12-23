@@ -25,9 +25,9 @@ this.getSavedData();
   axios.get('http://localhost:8080/view?username=admin@admin.com')
   .then((response) => {
  
-     console.log("inside Axios");
+     //console.log("inside Axios");
  
-  console.log(response.data);
+  //console.log(response.data);
     
     this.setState({savedArticlesArray: response.data});
 
@@ -36,8 +36,8 @@ this.getSavedData();
   }
 
   render () {
-console.log("starts my saved array");
-console.log(this.state.savedArticlesArray);
+//console.log("starts my saved array");
+//console.log(this.state.savedArticlesArray);
     return (<div><br/><br/>
 <ShowArticles data={this.state.savedArticlesArray} onDataChange={this.getSavedData.bind(this)} userLoggedIn={this.props.userLoggedIn}/>
       </div>);
